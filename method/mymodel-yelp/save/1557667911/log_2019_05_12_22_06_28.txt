@@ -1,4 +1,0 @@
-[2019-05-12 22:06:28]: Load checkpoint model from Path: save/1557667911/
-[2019-05-12 22:06:45]: Start eval process.
-[2019-05-12 22:08:28]: 0.04071220775553065	ever since hands 's toast has gotten worse and it just 's hands worse .
-[2019-05-12 22:09:22]: 0.5205510363053438	there is not definitely enough room in that part of the venue .

@@ -1,5 +1,0 @@
-[2019-05-13 09:33:24]: Load checkpoint model from Path: save/1557667911/
-[2019-05-13 09:33:45]: Start eval process.
-[2019-05-13 09:35:29]: 0.342347495586902	ever since joes has changed it 's just gotten worse and hands right .
-[2019-05-13 09:39:29]: 0.3407806467081348	there is definitely enough room in town that part of the venue at .
-[2019-05-13 11:26:46]: 0.017033186037639283	so basically tasted great custard when we basically go tasted excellent .
