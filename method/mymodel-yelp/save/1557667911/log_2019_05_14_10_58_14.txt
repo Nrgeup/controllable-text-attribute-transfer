@@ -1,0 +1,5 @@
+[2019-05-14 10:58:14]: Load checkpoint model from Path: save/1557667911/
+[2019-05-14 10:58:43]: Start eval process.
+[2019-05-14 10:58:53]: 0.5568544122775908	ever since joes has changed hands it 's just gotten worse and quick .
+[2019-05-14 10:59:06]: 0.5205510363053438	there is definitely enough amazing room in that part of the venue .
+[2019-05-14 10:59:44]: 0.0	so i 'll providing outstanding do n't quick stops local wines .

@@ -1,0 +1,4 @@
+[2019-05-14 10:31:38]: Load checkpoint model from Path: save/1557667911/
+[2019-05-14 10:32:01]: Start eval process.
+[2019-05-14 10:32:05]: 0.3237722713145643	ever since joes has changed it hands 's just gotten worse and worse .
+[2019-05-14 10:32:08]: 0.5205510363053438	there is definitely not enough room in that part of the venue .

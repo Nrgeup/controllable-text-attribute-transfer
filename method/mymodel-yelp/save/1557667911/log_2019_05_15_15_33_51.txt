@@ -1,0 +1,8 @@
+[2019-05-15 15:33:51]: Load checkpoint model from Path: save/1557667911/
+[2019-05-15 15:34:10]: Start eval process.
+[2019-05-15 15:34:41]: 0.5568544122775908	ever since joes has changed hands it 's just gotten worse and quick .
+[2019-05-15 15:36:44]: 0.5205510363053438	there is definitely not enough room in that part of the venue .
+[2019-05-15 15:37:17]: 0.0	so basically tasted watered down as _num_ mind .
+[2019-05-15 15:37:46]: 0.37868117902707676	she said she 'd be back and disappeared for a few minutes .
+[2019-05-15 15:38:17]: 0.0	i ca n't believe how inconsiderate this pharmacy is the facility tasted .
+[2019-05-15 15:50:22]: 0.0	just left and took it off the bill the shrimp took .

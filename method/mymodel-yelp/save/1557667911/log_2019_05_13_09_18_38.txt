@@ -1,0 +1,69 @@
+[2019-05-13 09:18:38]: Load checkpoint model from Path: save/1557667911/
+[2019-05-13 09:19:04]: Start eval process.
+[2019-05-13 09:19:09]: 0.3661926362999429	ever since joes has changed it 's just gotten worse and hands better .
+[2019-05-13 09:19:11]: 0.5205510363053438	there is definitely not enough room in that part of the venue .
+[2019-05-13 09:19:13]: 0.028517539529041507	so basically tasted great variety down so basically .
+[2019-05-13 09:19:15]: 0.37868117902707676	she said she 'd be back and disappeared for a few minutes .
+[2019-05-13 09:19:22]: 0.09058752341587764	i ca n't believe how inconsiderate this pharmacy is i feel .
+[2019-05-13 09:19:25]: 0.1051781439830431	just left and took it off the bill we took my size .
+[2019-05-13 09:19:28]: 0.3200286101270289	it is n't terrible , but it is n't very good either .
+[2019-05-13 09:19:30]: 0.4188216850419828	definitely disappointed that i could not use my birthday gift next day !
+[2019-05-13 09:19:35]: 0.9310627797040228	new owner , i heard - but i do n't know the details .
+[2019-05-13 09:19:36]: 0.15228621982435664	but it probably sucks too , .
+[2019-05-13 09:19:41]: 0.0169861974906263	we sit down and we got some really slow and lazy service and .
+[2019-05-13 09:19:44]: 0.19674979811155635	the charge did include miso soup and a small salad and a delicious .
+[2019-05-13 09:19:46]: 0.020448007360218394	there was no i 'm sorry or how did everything come out .
+[2019-05-13 09:19:49]: 0.23793665482062612	said we could n't sit at the table if we were n't ordering dinner .
+[2019-05-13 09:19:53]: 0.07029695662739609	the cash register area was empty and no one was watching the store front .
+[2019-05-13 09:19:56]: 0.2891784933232572	there are chips ok , but their salsa is really bland and cheap .
+[2019-05-13 09:20:00]: 0.48442732379638637	the wine was very average and the food was even less for .
+[2019-05-13 09:20:04]: 0.08737167851715875	staffed by applebees combined that do n't understand customer service and away .
+[2019-05-13 09:20:05]: 0.13440569963077395	the burgers were over cooked to the point the meat was crunchy .
+[2019-05-13 09:20:08]: 0.1933853138176172	blue cheese dressing was n't the best by any means next of .
+[2019-05-13 09:20:10]: 0.19505518236282093	my pad thai tasted like thai rice noodles with barbeque sauce .
+[2019-05-13 09:20:13]: 0.05873949094699214	she said `` yes , sorry . ''
+[2019-05-13 09:20:15]: 0.018476860420522198	the store is kindest looking and management needs to change and problem .
+[2019-05-13 09:20:17]: 0.04939382737115371	there was only meat and bread with this well .
+[2019-05-13 09:20:21]: 0.07029695662739609	when i complained in a polite way , i was walked out the door .
+[2019-05-13 09:20:23]: 0.018798317647335087	she was not happy being there and however have lots of the customers .
+[2019-05-13 09:20:25]: 0.33180774028439425	moving past the shape , they were dry and truly tasteless .
+[2019-05-13 09:20:27]: 0.04131551591106297	the program associates is no longer an option is more excellent crowd .
+[2019-05-13 09:20:28]: 0.07069301148938888	the decor was seriously lacking if you took dining and professional the sauce .
+[2019-05-13 09:20:31]: 0.04271802513581977	anyway , we got our coffee and will not return to this location .
+[2019-05-13 09:20:32]: 0.08032276872815308	the sales people here are excellent since we 're professional at my nails .
+[2019-05-13 09:20:36]: 0.04131551591106297	salsa is not hot or good , but such the hot order .
+[2019-05-13 09:20:39]: 0.44833867003844585	so i asked for the card to be refunded so much .
+[2019-05-13 09:20:43]: 0.31267103887671893	i just received a delivery order from them and essentially wasted my money .
+[2019-05-13 09:20:48]: 0.08737167851715878	i was n't going to let her do a thing further to me .
+[2019-05-13 09:20:50]: 0.015718877363021206	all she did give was run the around me and lied and bs stated .
+[2019-05-13 09:20:53]: 0.4121183751323027	the beans were in the burro in the rice was nowhere to be found .
+[2019-05-13 09:20:57]: 0.020448007360218394	they tried to take advantage of me because i am young nail .
+[2019-05-13 09:21:01]: 0.019765441873349214	we 've sent enough guests there who have absolutely returned flew with this restaurant .
+[2019-05-13 09:21:03]: 0.03104578053097407	always rude in their tone and always have shitty customer service !
+[2019-05-13 09:21:05]: 0.7799950505759817	they really need to work on their customer service and general attitude .
+[2019-05-13 09:21:09]: 0.39753601762639507	i eating skipped and we went back to the beer on a friends .
+[2019-05-13 09:21:12]: 0.5923033072023249	my `` hot '' sub was cold and the meat was watery .
+[2019-05-13 09:21:19]: 0.7138957847176474	when i first came to phx ... yes this indian sounded to me .
+[2019-05-13 09:21:21]: 0.5760844201603896	you wo n't find a better selection in scottsdale in the area .
+[2019-05-13 09:21:22]: 0.5008718428920987	i asked for thai hot and received very little spice i received .
+[2019-05-13 09:21:23]: 0.09578464408619825	i was very sick the night after eating to job ) .
+[2019-05-13 09:21:26]: 0.04324227075463215	i left hungry and unsatisfied , never again , was there later .
+[2019-05-13 09:21:29]: 0.7102992180127422	i just left this car wash and was very unsatisfied for .
+[2019-05-13 09:21:31]: 0.6725080050576688	had one mediocre meal and said , `` we 'll try again '' .
+[2019-05-13 09:21:32]: 0.08606372280891228	the food 's ok , the service is among the worst i have encountered .
+[2019-05-13 09:21:34]: 0.211525450795607	this was my first stop in looking for a wedding dress a party .
+[2019-05-13 09:21:38]: 0.2224246939793677	then he proceeded to tell me how to fix it every time .
+[2019-05-13 09:21:41]: 0.10120193244194395	do not go to this practice they are horrible they do not !
+[2019-05-13 09:21:43]: 0.4250281413416978	i guess she was n't happy that we were asking the prices .
+[2019-05-13 09:21:47]: 0.2044800736021839	the only saving grace was the black beans that trying the team .
+[2019-05-13 09:21:48]: 0.22416933501922293	lost a long time customer service , buying a hard course !
+[2019-05-13 09:21:50]: 0.5760844201603896	other than that , food here is pretty gross so large taste .
+[2019-05-13 09:21:53]: 0.4394900482337441	i was also curious about another product but he straight up walked off .
+[2019-05-13 09:21:55]: 0.23901088824528133	so far i 'm not really impressed but their place so mediocre .
+[2019-05-13 09:21:58]: 0.05012578715739066	my groupon is only for the two windows i return .
+[2019-05-13 09:21:59]: 0.020200106912694155	grade has lost my work to ben , & business & fresh never .
+[2019-05-13 09:22:01]: 0.35740464043618275	the food was pretty bad , i would not go there again .
+[2019-05-13 09:22:04]: 0.04324227075463215	we will not be using this location again but their fun place .
+[2019-05-13 09:22:06]: 0.09578464408619825	this is a horrible venue for classic it 's could information .
+[2019-05-13 09:22:09]: 0.22997519112894443	you 'll have zero appetite after the first bite in the special .
+[2019-05-13 09:22:11]: 0.03285702044797773	do n't go here unless you want to pay for crap to .

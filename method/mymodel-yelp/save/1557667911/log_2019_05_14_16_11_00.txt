@@ -1,0 +1,3 @@
+[2019-05-14 16:11:00]: Load checkpoint model from Path: save/1557667911/
+[2019-05-14 16:11:29]: Start eval process.
+[2019-05-14 16:11:44]: 0.5568544122775908	ever since joes has changed hands it 's just gotten worse and worse .
