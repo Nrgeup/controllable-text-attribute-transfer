@@ -7,11 +7,13 @@ In this work, we present a controllable unsupervised text attribute transfer fra
 
 ![Model architecture](/file/model.png)
 
-## Dependencies
+## Documents
+
+### Dependencies
 	Python3.6
 	Pytorch0.4
 
-## Data preprocessing
+###  Data preprocessing
 In the data directory，run:
 
 	python preprocessed_data.py 
