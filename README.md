@@ -19,6 +19,22 @@ In the data directory，run:
 	python preprocessed_data.py 
 
 
+### Model Training
+
+To train the model, run in the method directory:
+
+	python main.py 
+
+After the training finished, you can specify the check point directory in `main.py`,
+
+	args.if_load_from_checkpoint = True
+	args.checkpoint_name = "xxx"
+
+Or load my check-point file in the `/save/1557667911` directory, and run:
+
+	python main.py 
+
+
 More code is being sorted out！
 
 
