@@ -1,4 +1,4 @@
-# Controllable Unsupervised Text Attribute Transfer
+# Controllable Text Attribute Transfer
 
 Code for the paper: `Controllable Unsupervised Text Attribute Transfer via Editing Entangled Latent Representation`[(Arxiv:1905.12926)](https://arxiv.org/abs/1905.12926)
 
@@ -10,8 +10,8 @@ In this work, we present a controllable unsupervised text attribute transfer fra
 ## Documents
 
 ### Dependencies
-	Python3.6
-	Pytorch0.4
+	Python 3.6
+	Pytorch 0.4
 
 ###  Data preprocessing
 In the data directory，run:
