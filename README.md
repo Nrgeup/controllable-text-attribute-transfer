@@ -13,7 +13,7 @@ In this work, we present a controllable unsupervised text attribute transfer fra
 	Python 3.6
 	Pytorch 0.4
 
-###  Data preprocessing
+###  Data Preprocessing
 In the data directory，run:
 
 	python preprocessed_data.py 
