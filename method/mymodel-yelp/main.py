@@ -12,7 +12,6 @@ from torch import optim
 import numpy
 import matplotlib
 from matplotlib import pyplot as plt
-from bleu import *
 
 # Import your model files.
 from model import make_model, Classifier, NoamOpt, LabelSmoothing, fgim_attack
@@ -154,8 +153,6 @@ def train_iters(ae_model, dis_model):
 
             loss_rec.backward()
             ae_optimizer.step()
-            dis_optimizer.step()
-
 
             # Classifier
             dis_lop = dis_model.forward(to_var(latent.clone()))
