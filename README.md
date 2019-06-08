@@ -11,7 +11,15 @@ In this work, we present a controllable unsupervised text attribute transfer fra
 
 ### Dependencies
 	Python 3.6
-	Pytorch 0.4
+	PyTorch 0.4
+	
+### Directory description
+
+<pre><code>Root
+├─data/*        Store the data files used by models.
+├─method/*      Store the source code of models.
+└─outputs/*     Store the final output of models.
+</code></pre>
 
 ###  Data Preprocessing
 In the data directory，run:
@@ -30,12 +38,34 @@ After the training finished, you can specify the check point directory in `main.
 	args.if_load_from_checkpoint = True
 	args.checkpoint_name = "xxx"
 
-Or load my check-point file in the `/save/1557667911` directory, and run:
+Or you can load my check-point file:
+    
+    `/save/1557667911`  for yelp;
+    '/save/1557668663' for amazon;
+    '/save/1557891887' for captions;    
+    
+and run:
 
 	python main.py 
 
+## Example
 
-More code is being sorted out！
+Negative ->Positive:
+<pre><code>Source:                 it is n’t terrible , but it is n’t very good either .
+Human:                  it is n’t perfect , but it is very good .
+Our model(w={1.0}):     it is n’t terrible , but it is n’t very good either .
+Our model(w={2.0}):     it is n’t terrible , but it is n’t very good delicious either .
+Our model(w={3.0}):     it is n’t terrible , but it is very good delicious either .
+Our model(w={4.0}):     it is n’t terrible , but it is very good and delicious .
+Our model(w={5.0}):     it is n’t terrible , but it is very good and delicious appetizer .
+Our model(w={6.0}):     it is excellent , and it is very good and delicious well .
+</code></pre>
+
+
+
+## LICENSE
+
+[MIT](./LICENSE)
 
 
 
