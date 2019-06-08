@@ -514,7 +514,6 @@ def fgim_attack(model, origin_data, target, ae_model, max_sequence_length, id_bo
             # print("output", output[0].item())
             loss = dis_criterion(output, target)
             model.zero_grad()
-            # dis_optimizer.zero_grad()
             loss.backward()
             data_grad = data.grad.data
             # print("data_grad")
