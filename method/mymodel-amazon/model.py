@@ -7,7 +7,6 @@ import math, copy, time
 import torch.nn.utils.rnn as rnn_utils
 from data import get_cuda, to_var, calc_bleu
 import numpy as np
-from bleu import *
 
 
 def clones(module, N):
@@ -402,15 +401,6 @@ class LabelSmoothing(nn.Module):
 class Classifier(nn.Module):
     def __init__(self, latent_size, output_size):
         super().__init__()
-        # self.fc1 = nn.Linear(latent_size, 300)
-        # self.relu1 = nn.LeakyReLU(0.2, )
-        # self.fc2 = nn.Linear(300, 200)
-        # self.relu2 = nn.LeakyReLU(0.2)
-        # self.fc3 = nn.Linear(200, 100)
-        # self.relu3 = nn.LeakyReLU(0.2)
-        # self.fc4 = nn.Linear(100, output_size)
-
-        # type2
         self.fc1 = nn.Linear(latent_size, 100)
         self.relu1 = nn.LeakyReLU(0.2, )
         self.fc2 = nn.Linear(100, 50)
@@ -419,17 +409,6 @@ class Classifier(nn.Module):
         self.sigmoid = nn.Sigmoid()
 
     def forward(self, input):
-        # input: (batch_size * latent_size)
-        # out = self.fc1(input)
-        # out = self.relu1(out)
-        # out = self.fc2(out)
-        # out = self.relu2(out)
-        # out = self.fc3(out)
-        # out = self.relu3(out)
-        # out = self.fc4(out)
-        # out = self.sigmoid(out)
-
-        # type2
         out = self.fc1(input)
         out = self.relu1(out)
         out = self.fc2(out)
@@ -440,33 +419,26 @@ class Classifier(nn.Module):
         # out = F.log_softmax(out, dim=1)
         return out  # batch_size * label_size
 
+
 def fgim_attack(model, origin_data, target, ae_model, max_sequence_length, id_bos,
-                id2text_sentence, id_to_word, gold_ans, positive, epsilon=3.0):
+                id2text_sentence, id_to_word, gold_ans):
     """Fast Gradient Iterative Methods"""
 
     dis_criterion = nn.BCELoss(size_average=True)
-    max_bleu = 0.0
-    best_text = None
 
-    # data = to_var(data.clone())
-    # data.requires_grad = True
-    # dis_optimizer = torch.optim.Adam(data, lr=0.0001)
     gold_text = id2text_sentence(gold_ans, id_to_word)
     print("gold:", gold_text)
     # while True:
-    for epsilon in [1.0, 2.0, 3.0, 4.0, 5.0]:
+    for epsilon in [2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0]:
         it = 0
         data = origin_data
         while True:
-            # print("epsilon:", epsilon)
+            print("epsilon:", epsilon)
 
             data = to_var(data.clone())  # (batch_size, seq_length, latent_size)
             # Set requires_grad attribute of tensor. Important for Attack
             data.requires_grad = True
             output = model.forward(data)
-
-
-
             # Calculate gradients of model in backward pass
             # print("target", target[0].item())
             # print("output", output[0].item())
@@ -477,7 +449,6 @@ def fgim_attack(model, origin_data, target, ae_model, max_sequence_length, id_bo
             data_grad = data.grad.data
             # print("data_grad")
             # print(data_grad)
-
             data = data - epsilon * data_grad
             # print("epsilon * data_grad")
             # print((epsilon * data_grad))
@@ -485,7 +456,6 @@ def fgim_attack(model, origin_data, target, ae_model, max_sequence_length, id_bo
             # print(data)
             # print("perturbed_data")
             # print(perturbed_data)
-
             it += 1
             # data = perturbed_data
             epsilon = epsilon * 0.9
@@ -494,36 +464,11 @@ def fgim_attack(model, origin_data, target, ae_model, max_sequence_length, id_bo
                                                     max_len=max_sequence_length,
                                                     start_id=id_bos)
             generator_text = id2text_sentence(generator_id[0], id_to_word)
-            # print(gold_text)
-            # print(generator_text)
-            # output = model.forward(data)
-            bleu, addition = corpus_bleu([generator_text], [[gold_text]])
-            # print(bleu)
-            bleu = bleu[0]
-            # bleu = calc_bleu([gold_text.split()], generator_text.split())
-            if best_text is None or bleu > max_bleu:
-                max_bleu = bleu
-                best_text = generator_text
-
-            # print(bleu)
-            # print("| It {:2d} | dis model pred {:5.4f} |".format(it, output[0].item()))
-            # print(generator_text)
-            # input("========")
-
-            if it >= 10:
+            print("| It {:2d} | dis model pred {:5.4f} |".format(it, output[0].item()))
+            print(generator_text)
+            if it >= 5:
                 break
-            # if positive:
-            #     if float(output[0].item()) > 0.95:
-            #         break
-            # else:
-            #     if float(output[0].item()) < 0.05:
-            #         break
-
-    # print(max_bleu)
-    # print(best_text)
-    return max_bleu, best_text
-
-
+    return
 
 
 
@@ -538,5 +483,3 @@ if __name__ == '__main__':
     # Small example model.
     # tmp_model = make_model(10, 10, 2)
     pass
-
-

@@ -12,7 +12,6 @@ from torch import optim
 import numpy
 import matplotlib
 from matplotlib import pyplot as plt
-from bleu import *
 
 
 # Import your model files.
@@ -57,7 +56,7 @@ parser.add_argument('--label_size', type=int, default=1)
 
 
 args = parser.parse_args()
-# args.if_load_from_checkpoint = False
+args.if_load_from_checkpoint = False
 
 # args.if_load_from_checkpoint = True
 # args.checkpoint_name = "1557668663"
@@ -152,10 +151,9 @@ def train_iters(ae_model, dis_model):
                                     tensor_tgt_y.contiguous().view(-1)) / tensor_ntokens.data
 
             ae_optimizer.optimizer.zero_grad()
-            # dis_optimizer.zero_grad()
+
             loss_rec.backward()
             ae_optimizer.step()
-            # dis_optimizer.step()
 
             # Classifier
             dis_lop = dis_model.forward(to_var(latent.clone()))
@@ -207,7 +205,6 @@ def eval_iters(ae_model, dis_model):
     add_log("Start eval process.")
     ae_model.eval()
     dis_model.eval()
-    bleus = []
     for it in range(eval_data_loader.num_batch):
         batch_sentences, tensor_labels, \
         tensor_src, tensor_src_mask, tensor_tgt, tensor_tgt_y, \
@@ -225,22 +222,13 @@ def eval_iters(ae_model, dis_model):
 
         # Define target label
         target = get_cuda(torch.tensor([[1.0]], dtype=torch.float))
-        flag = True
         if tensor_labels[0].item() > 0.5:
             target = get_cuda(torch.tensor([[0.0]], dtype=torch.float))
-            flag = False
         print("target_labels", target)
 
-        bleu, modify_text = fgim_attack(dis_model, latent, target, ae_model, args.max_sequence_length, args.id_bos,
-                                        id2text_sentence, args.id_to_word, gold_ans[it], flag)
-        bleus.append(bleu)
-        # input("====================")
-        add_log(str(bleu) + '\t' + modify_text)
+        modify_text = fgim_attack(dis_model, latent, target, ae_model, args.max_sequence_length, args.id_bos,
+                                        id2text_sentence, args.id_to_word, gold_ans[it])
         add_output(modify_text)
-        print("mean bleu:", sum(bleus) / float(len(bleus)))
-
-
-
     return
 
 if __name__ == '__main__':

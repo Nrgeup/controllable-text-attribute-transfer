@@ -222,16 +222,12 @@ def eval_iters(ae_model, dis_model):
 
         # Define target label
         target = get_cuda(torch.tensor([[1.0]], dtype=torch.float))
-        flag = True
         if tensor_labels[0].item() > 0.5:
             target = get_cuda(torch.tensor([[0.0]], dtype=torch.float))
-            flag = False
         print("target_labels", target)
 
         modify_text = fgim_attack(dis_model, latent, target, ae_model, args.max_sequence_length, args.id_bos,
-                                        id2text_sentence, args.id_to_word, gold_ans[it], flag)
-        bleus.append(bleu)
-        add_log(str(bleu) + '\t' + modify_text)
+                                        id2text_sentence, args.id_to_word, gold_ans[it])
         add_output(modify_text)
     return
 
