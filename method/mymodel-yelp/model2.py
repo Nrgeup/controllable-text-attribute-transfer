@@ -61,6 +61,7 @@ class MultiHeadedAttention(nn.Module):
 
 class PositionwiseFeedForward(nn.Module):
     """Implements FFN equation."""
+
     def __init__(self, d_model, d_ff, dropout=0.1):
         super(PositionwiseFeedForward, self).__init__()
         self.w_1 = nn.Linear(d_model, d_ff)
@@ -73,6 +74,7 @@ class PositionwiseFeedForward(nn.Module):
 
 class PositionalEncoding(nn.Module):
     """Implement the PE function."""
+
     def __init__(self, d_model, dropout, max_len=5000):
         super(PositionalEncoding, self).__init__()
         self.dropout = nn.Dropout(p=dropout)
@@ -95,6 +97,7 @@ class PositionalEncoding(nn.Module):
 
 class LayerNorm(nn.Module):
     """Construct a layernorm module (See citation for details)."""
+
     def __init__(self, features, eps=1e-6):
         super(LayerNorm, self).__init__()
         self.a_2 = nn.Parameter(torch.ones(features))
@@ -112,6 +115,7 @@ class SublayerConnection(nn.Module):
     A residual connection followed by a layer norm.
     Note for code simplicity the norm is first as opposed to last.
     """
+
     def __init__(self, size, dropout):
         super(SublayerConnection, self).__init__()
         self.norm = LayerNorm(size)
@@ -135,6 +139,7 @@ class Embeddings(nn.Module):
 ################ Encoder ################
 class Encoder(nn.Module):
     """Core encoder is a stack of N layers"""
+
     def __init__(self, layer, N):
         super(Encoder, self).__init__()
         self.layers = clones(layer, N)
@@ -149,6 +154,7 @@ class Encoder(nn.Module):
 
 class EncoderLayer(nn.Module):
     """Encoder is made up of self-attn and feed forward (defined below)"""
+
     def __init__(self, size, self_attn, feed_forward, dropout):
         super(EncoderLayer, self).__init__()
         self.self_attn = self_attn
@@ -165,6 +171,7 @@ class EncoderLayer(nn.Module):
 ################ Decoder ################
 class Decoder(nn.Module):
     """Generic N layer decoder with masking."""
+
     def __init__(self, layer, N):
         super(Decoder, self).__init__()
         self.layers = clones(layer, N)
@@ -198,6 +205,7 @@ class DecoderLayer(nn.Module):
 ################ Generator ################
 class Generator(nn.Module):
     """Define standard linear + softmax generation step."""
+
     def __init__(self, d_model, vocab):
         super(Generator, self).__init__()
         self.proj = nn.Linear(d_model, vocab)
@@ -206,45 +214,114 @@ class Generator(nn.Module):
         return F.log_softmax(self.proj(x), dim=-1)
 
 
+class AttentionScore(nn.Module):
+    """
+    correlation_func = 1, sij = x1^Tx2
+    correlation_func = 2, sij = (Wx1)D(Wx2)
+    correlation_func = 3, sij = Relu(Wx1)DRelu(Wx2)
+    correlation_func = 4, sij = x1^TWx2
+    correlation_func = 5, sij = Relu(Wx1)DRelu(Wx2)
+    """
+
+    def __init__(self, input_size, hidden_size, correlation_func=1, do_similarity=False):
+        super(AttentionScore, self).__init__()
+        self.correlation_func = correlation_func
+        self.hidden_size = hidden_size
+
+        if correlation_func == 2 or correlation_func == 3:
+            self.linear = nn.Linear(input_size, hidden_size, bias=False)
+            if do_similarity:
+                self.diagonal = Parameter(torch.ones(1, 1, 1) / (hidden_size ** 0.5), requires_grad=False)
+            else:
+                self.diagonal = Parameter(torch.ones(1, 1, hidden_size), requires_grad=True)
+
+        if correlation_func == 4:
+            self.linear = nn.Linear(input_size, input_size, bias=False)
+
+        if correlation_func == 5:
+            self.linear = nn.Linear(input_size, hidden_size, bias=False)
+
+    def forward(self, x1, x2, x2_mask):
+        '''
+        Input:
+        x1: batch x word_num1 x dim
+        x2: batch x word_num2 x dim
+        Output:
+        scores: batch x word_num1 x word_num2
+        '''
+        # x1 = dropout(x1, p = dropout_p, training = self.training)
+        # x2 = dropout(x2, p = dropout_p, training = self.training)
+
+        x1_rep = x1
+        x2_rep = x2
+        batch = x1_rep.size(0)
+        word_num1 = x1_rep.size(1)
+        word_num2 = x2_rep.size(1)
+        dim = x1_rep.size(2)
+        if self.correlation_func == 2 or self.correlation_func == 3:
+            x1_rep = self.linear(x1_rep.contiguous().view(-1, dim)).view(batch, word_num1, self.hidden_size)  # Wx1
+            x2_rep = self.linear(x2_rep.contiguous().view(-1, dim)).view(batch, word_num2, self.hidden_size)  # Wx2
+            if self.correlation_func == 3:
+                x1_rep = F.relu(x1_rep)
+                x2_rep = F.relu(x2_rep)
+            x1_rep = x1_rep * self.diagonal.expand_as(x1_rep)
+            # x1_rep is (Wx1)D or Relu(Wx1)D
+            # x1_rep: batch x word_num1 x dim (corr=1) or hidden_size (corr=2,3)
+
+        if self.correlation_func == 4:
+            x2_rep = self.linear(x2_rep.contiguous().view(-1, dim)).view(batch, word_num2, dim)  # Wx2
+
+        if self.correlation_func == 5:
+            x1_rep = self.linear(x1_rep.contiguous().view(-1, dim)).view(batch, word_num1, self.hidden_size)  # Wx1
+            x2_rep = self.linear(x2_rep.contiguous().view(-1, dim)).view(batch, word_num2, self.hidden_size)  # Wx2
+            x1_rep = F.relu(x1_rep)
+            x2_rep = F.relu(x2_rep)
+        scores = x1_rep.bmm(x2_rep.transpose(1, 2))
+        empty_mask = x2_mask.eq(0).expand_as(scores)
+        scores.data.masked_fill_(empty_mask.data, -float('inf'))
+        # softmax
+        alpha_flat = F.softmax(scores, dim=-1)
+        return alpha_flat
+
+
 class EncoderDecoder(nn.Module):
     """
     A standard Encoder-Decoder architecture. Base for this and many other models.
     """
-    def __init__(self, encoder, decoder, src_embed, tgt_embed, generator, position_layer, model_size, latent_size):
+
+    def __init__(self, encoder, decoder, gru, src_embed, tgt_embed, generator, input_size):
         super(EncoderDecoder, self).__init__()
         self.encoder = encoder
         self.decoder = decoder
+        self.gru = gru
         self.src_embed = src_embed
         self.tgt_embed = tgt_embed
         self.generator = generator
-        self.position_layer = position_layer
-        self.model_size = model_size
-        self.latent_size = latent_size
-        self.sigmoid = nn.Sigmoid()
-
-        # self.memory2latent = nn.Linear(self.model_size, self.latent_size)
-        # self.latent2memory = nn.Linear(self.latent_size, self.model_size)
+        self.linear = nn.Linear(input_size * 2, input_size)
+        self.attention = AttentionScore(input_size, input_size)
+        self.gru_decoder = nn.GRU(input_size * 2, input_size, 1)
 
     def forward(self, src, tgt, src_mask, tgt_mask):
         """
         Take in and process masked src and target sequences.
         """
-        latent = self.encode(src, src_mask)  # (batch_size, max_src_seq, d_model)
-        latent = self.sigmoid(latent)
-        # memory = self.position_layer(memory)
+        memory = self.encode(src, src_mask)  # (batch_size, max_src_seq, d_model)
+        # attented_mem=self.attention(memory,memory,memory,src_mask)
+        # memory=attented_mem
+        score = self.attention(memory, memory, src_mask)
+        attent_memory = score.bmm(memory)
+        # memory=self.linear(torch.cat([memory,attent_memory],dim=-1))
 
-        latent = torch.sum(latent, dim=1)  # (batch_size, d_model)
-
-        # latent = self.memory2latent(memory)  # (batch_size, max_src_seq, latent_size)
-
-        # latent = self.memory2latent(memory)
-        # memory = self.latent2memory(latent)  # (batch_size, max_src_seq, d_model)
-
+        memory, _ = self.gru(attented_mem)
+        '''
+        score=torch.sigmoid(self.linear(memory))
+        memory=memory*score
+        '''
+        latent = torch.sum(memory, dim=1)  # (batch_size, d_model)
         logit = self.decode(latent.unsqueeze(1), tgt, tgt_mask)  # (batch_size, max_tgt_seq, d_model)
+        # logit,_=self.gru_decoder(logit)
         prob = self.generator(logit)  # (batch_size, max_seq, vocab_size)
         return latent, prob
-
-
 
     def encode(self, src, src_mask):
         return self.encoder(self.src_embed(src), src_mask)
@@ -262,9 +339,6 @@ class EncoderDecoder(nn.Module):
         src_mask: (batch_size, 1, max_src_len)
         '''
         batch_size = latent.size(0)
-
-        # memory = self.latent2memory(latent)
-
         ys = get_cuda(torch.ones(batch_size, 1).fill_(start_id).long())  # (batch_size, 1)
         for i in range(max_len - 1):
             # input("==========")
@@ -284,24 +358,20 @@ class EncoderDecoder(nn.Module):
         return ys[:, 1:]
 
 
-def make_model(d_vocab, N, d_model, latent_size, d_ff=1024, h=4, dropout=0.1):
+def make_model(d_vocab, N, d_model, d_ff=1024, h=4, dropout=0.1):
     """Helper: Construct a model from hyperparameters."""
     c = copy.deepcopy
     attn = MultiHeadedAttention(h, d_model)
     ff = PositionwiseFeedForward(d_model, d_ff, dropout)
     position = PositionalEncoding(d_model, dropout)
-    share_embedding = Embeddings(d_model, d_vocab)
     model = EncoderDecoder(
         Encoder(EncoderLayer(d_model, c(attn), c(ff), dropout), N),
         Decoder(DecoderLayer(d_model, c(attn), c(attn), c(ff), dropout), N),
-        # nn.Sequential(Embeddings(d_model, d_vocab), c(position)),
-        # nn.Sequential(Embeddings(d_model, d_vocab), c(position)),
-        nn.Sequential(share_embedding, c(position)),
-        nn.Sequential(share_embedding, c(position)),
+        nn.GRU(d_model, d_model, 1),
+        nn.Sequential(Embeddings(d_model, d_vocab), c(position)),
+        nn.Sequential(Embeddings(d_model, d_vocab), c(position)),
         Generator(d_model, d_vocab),
-        c(position),
-        d_model,
-        latent_size,
+        d_model
     )
     # This was important from their code.
     # Initialize parameters with Glorot / fan_avg.
@@ -483,5 +553,3 @@ if __name__ == '__main__':
     # Small example model.
     # tmp_model = make_model(10, 10, 2)
     pass
-
-
