@@ -40,7 +40,7 @@ After the training finished, you can specify the check point directory in `main.
 
 Or you can load my check-point file:
     
-    '/save/1557667911'  for yelp;
+    '/save/1557667911' for yelp;
     '/save/1557668663' for amazon;
     '/save/1557891887' for captions;    
     
