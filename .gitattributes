@@ -1,2 +1,4 @@
 data/* linguist-vendored
+*.1 linguist-vendored=false
+*.0 linguist-vendored=false
 
