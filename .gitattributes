@@ -1,2 +1,2 @@
-data/*.* linguist-vendored=false
+data/* linguist-vendored=false
 
